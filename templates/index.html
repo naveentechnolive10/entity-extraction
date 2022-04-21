@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Entity Extraction</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+    #content {
+        padding: 15px;
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+        text-align: center;
+        overflow: hidden;
+    }
+    #inp {
+        margin-left: 15%;
+    }
+
+    html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        width: 100%;
+        height: 60px;
+        background: #054646;
+        position: fixed;
+        top: 0;
+    }
+    h4 {
+        width: inherit;
+    }
+    footer {
+        width: 100%;
+        height: 60px;
+        background: #054646;
+        position: fixed;
+        bottom: 0;
+    }
+    h2{    
+        color: whitesmoke;
+        margin: 10px;
+    }
+    .textcolor {
+        color: #054646;
+    }
+    .label-head{
+        font-size:15px; 
+        font-family: 'Source Sans Pro', sans-serif;    
+    }
+    </style>
+</head>
+<body>
+<header><h2>Entity Extraction</h2></header>
+<div id="content" class="container-fluid body-content">
+    {% if content %} 
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="textcolor">Extracted Results</h2>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">          
+            <table class="table table-hover table-bordered table-striped">
+            <tbody>
+            {% for key, value in content.items() %}
+                <tr>
+                <td><code>{{key}}</code></td> 
+                <td><label>{% if value %}{{value}}{% endif %}</label></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <form method="get" action="/">
+                <p>
+                    <input class="btn btn-info mb-4" type="submit" value="Back">
+                </p>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+        <h4 class="textcolor">Select PDF or PNG file to upload</h3><br>
+        <p>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+        </p>
+        <form method="post" action="/" enctype="multipart/form-data">
+            <div class="form-group">
+                <input id="inp" type="file" class="btn form-control-file" name="file" autocomplete="off" required><br>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary mb-2" value="Submit">
+            </div>
+        </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<footer></footer>
+</body>
+</html>

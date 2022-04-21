@@ -6,6 +6,9 @@
 3. Setup
     1. [Manually Setup](#setup)
     2. [Automatic Setup](#setupbymakefile)
+4. Docker Container
+    1. [Manually Setup](#docker)
+    2. [Automatic Setup](#dockersetupbymakefile)
 5. [Setup and run via PyInvoke](#pyinvoke)
 7. [Example Usage](#example)
 
@@ -68,6 +71,23 @@ Entity Extraction is designed to fetch the desired fields from the uploaded docu
 before run below commands set DVC variables in .bash_profile file.
 - For complete setup: ```make local_make```.
 Note: If make utility is not supporting by your Operating System then install/setup by `PyInvoke` as mentioned below.
+
+<a name="docker"></a>
+
+### Docker Container
+1. Run `docker build -t entity-extraction` from the project's root directory to
+ build the docker image
+2. Run `docker run -d -p 5000:5000 --env-file .env entity-extraction` to run the docker image. To run
+ in the background add `-d` 
+
+<a name="dockersetupbymakefile"></a>
+
+### setup and run by Makefile
+before run below commands set DVC variables in .bash_profile file.
+- For complete setup, build image and run: ```make local_make_docker```. 
+- For setup only: ```make docker_install```.
+- For building docker image only: ```make docker_build```.
+- For running container only: ```make local_docker_run```.
 
 <a name="pyinvoke"></a>
 ### Setup via PyInvoke

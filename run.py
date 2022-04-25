@@ -4,14 +4,11 @@ from werkzeug.utils import secure_filename
 from src.api_handling import extract_entity_google, extract_image, clean_content
 
 app=Flask(__name__)
-
-app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 logging.basicConfig(stream=sys.stdout, level=os.environ.get("LOGLEVEL", "INFO"), format='%(message)s')
 
 path = os.getcwd()
-# file Upload
 UPLOAD_FOLDER = os.path.join(path, 'uploads')
 
 if not os.path.isdir(UPLOAD_FOLDER):
@@ -24,12 +21,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/')
-def upload_form():
-    return render_template('index.html')
-
-
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
@@ -62,6 +54,8 @@ def upload_file():
         else:
             flash('Allowed PDF or PNG file only')
             return redirect(request.url)
+    else:
+        return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port = 5000, debug = True)

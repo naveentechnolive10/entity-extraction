@@ -20,7 +20,7 @@ def google_credentials(ctx):
     """
         task which setups the google_credentials
     """
-    print("************ Checking if variables needed by dvc are present or not ****************")
+    print("************ Checking if variables needed by application are present or not ****************")
     google_credentials = ctx.run(f"echo $GOOGLE_APPLICATION_CREDENTIALS").stdout.strip()
     if google_credentials == '':
         message = "GOOGLE_APPLICATION_CREDENTIALS environment variable are not present, please follow README.md file."
@@ -100,5 +100,5 @@ def local_docker(ctx):
 ns = Collection(install, google_credentials, local_run, local_dev, local_docker_run, docker_build,
                 local_docker_run, local_docker, clean, docker_clean)
 # setting this true to provide console output to commands while running
-config = Config(defaults={"run": {"pty": True}})
-ns.configure(config)
+# config = Config(defaults={"run": {"pty": True}})
+# ns.configure(config)

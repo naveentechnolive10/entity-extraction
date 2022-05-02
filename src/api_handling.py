@@ -30,7 +30,7 @@ def extract_entity_google(contentdata, min_likelihood = "LIKELY"):
 
     # Construct inspect configuration dictionary
     inspect_config = {
-        "info_types": [{"name": info_type} for info_type in INFO_TYPES],
+        "info_types": [{"name": info_type} for info_type in response_parameters.values()],
         "min_likelihood": min_likelihood,
         "include_quote": True,
     }
@@ -51,20 +51,13 @@ def extract_entity_google(contentdata, min_likelihood = "LIKELY"):
     extracted_list = {"status":"No Findings Matched."}
     if response:
         logging.info("Formating details of response recieved from Google DLP API")
-        extracted_list = {
-            PERSON_NAMES: format_result(response, (PERSON_NAME,)),
-            FIRST_NAMES: format_result(response, (FIRST_NAME,)),
-            LAST_NAMES: format_result(response, (LAST_NAME,)),
-            STREET_ADDRESSES: format_result(response, (STREET_ADDRESS,)),
-            EMAIL_ADDRESSES: format_result(response, (EMAIL_ADDRESS,)),
-            "status":"Findings Matched."
-        }
-
+        extracted_list = {key: format_result(response, (val,)) for key, val in response_parameters.items()}
+        extracted_list["status"] = "Findings Matched."
     return extracted_list
 
 
 def format_result(response: InspectContentResponse, type_: tuple) -> list:
-    return [finding.quote for finding in response.result.findings if finding.info_type.name in type_]
+    return [finding.quote.replace('\n',"") for finding in response.result.findings if finding.info_type.name in type_]
 
 def extract_image(raw_content):
     client = vision_v1.ImageAnnotatorClient()

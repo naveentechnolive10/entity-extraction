@@ -1,13 +1,9 @@
-PERSON_NAMES = "person_names"
-FIRST_NAMES = "first_names"
-LAST_NAMES = "last_names"
-STREET_ADDRESSES = "street_addresses"
-EMAIL_ADDRESSES = "email_addresses"
-
-FIRST_NAME = "FIRST_NAME"
-LAST_NAME = "LAST_NAME"
-STREET_ADDRESS = "STREET_ADDRESS"
-EMAIL_ADDRESS = "EMAIL_ADDRESS"
-PERSON_NAME = "PERSON_NAME"
-
-INFO_TYPES = [PERSON_NAME, FIRST_NAME, LAST_NAME, STREET_ADDRESS, EMAIL_ADDRESS]
+response_parameters = {
+    "person_names":"PERSON_NAME",
+    "first_names":"FIRST_NAME", 
+    "last_names":"LAST_NAME",
+    "street_addresses": "STREET_ADDRESS",
+    "email_addresses": "EMAIL_ADDRESS",
+    "phone_numbers": "PHONE_NUMBER"
+    }
+#More information types : https://cloud.google.com/dlp/docs/infotypes-reference
